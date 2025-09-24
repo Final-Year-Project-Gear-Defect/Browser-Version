@@ -220,41 +220,6 @@ if uploaded_file:
                     plt.close(fig_conf)  # Close to free memory
                 else:
                     st.info("No confidence data available.")
-                    
-            # Additional insights
-            st.header("🎯 Analysis Insights")
-            
-            # Calculate severity based on defect types
-            severity_score = (defect_counts["hp_cd"] * 3 + 
-                            defect_counts["hp_cm"] * 2 + 
-                            defect_counts["kp"] * 1)
-            
-            if severity_score == 0:
-                severity_level = "✅ No Issues"
-                color = "green"
-            elif severity_score <= 3:
-                severity_level = "⚠️ Minor Issues"
-                color = "orange"
-            elif severity_score <= 7:
-                severity_level = "🔶 Moderate Issues"
-                color = "orange"
-            else:
-                severity_level = "🚨 Critical Issues"
-                color = "red"
-            
-            st.markdown(f"**Overall Severity:** :{color}[{severity_level}] (Score: {severity_score})")
-            
-            # Recommendations
-            st.subheader("💡 Recommendations")
-            if defect_counts["hp_cd"] > 0:
-                st.error("⚠️ Critical defects detected! Immediate maintenance required.")
-            elif defect_counts["hp_cm"] > 0:
-                st.warning("🔧 Common defects found. Schedule maintenance soon.")
-            elif defect_counts["kp"] > 0:
-                st.info("🔍 Minor key point issues detected. Monitor closely.")
-            else:
-                st.success("✅ Gear appears to be in good condition!")
-
         # Save + Download button
         save_path = "detection_result.jpg"
         cv2.imwrite(save_path, cv2.cvtColor(result_img, cv2.COLOR_RGB2BGR))
